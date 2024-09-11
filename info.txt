@@ -1,5 +1,3 @@
-echo "set disassembly-flavor intel" > ~/.gdbinit // to setup gdb for intel syntax
-
-// to compile the program
-nasm -f elf -o first.o first.asm
-ld -m elf_i386 -o first first.o
+nasm -f elf64 add.s -o add.o && nasm -f elf64 multiply.s -o multiply.o
+ar rcs libasm.a add.o multiply.o
+gcc main.c -L. -lasm -o main
