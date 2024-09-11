@@ -1,3 +1,18 @@
 nasm -f elf64 add.s -o add.o && nasm -f elf64 multiply.s -o multiply.o
 ar rcs libasm.a add.o multiply.o
 gcc main.c -L. -lasm -o main
+
+
+//
+
+gdb
+layout asm
+break _start
+run
+si // executer chaque etape du programme
+
+
+
+x/5s adresse
+
+https://web.cecs.pdx.edu/~apt/cs491/gdb.pdf
