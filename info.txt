@@ -3,9 +3,13 @@ ar rcs libasm.a add.o multiply.o
 gcc main.c -L. -lasm -o main
 
 
-//
+// compile
 
-gdb
+nasm -f elf64 -o ft_strlen.o ft_strlen.s
+ld -o ft_strlen ft_strlen.o
+
+// gdb
+gdb ./program
 layout asm
 break _start
 run
@@ -16,3 +20,12 @@ si // executer chaque etape du programme
 x/5s adresse
 
 https://web.cecs.pdx.edu/~apt/cs491/gdb.pdf
+https://www.lacl.fr/tan/asm
+
+
+syscall
+
+uname -a
+Linux made-f0Ar8s1.clusters.42paris.fr 5.15.0-119-generic #129-Ubuntu SMP Fri Aug 2 19:25:20 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+x86_64
+https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md
