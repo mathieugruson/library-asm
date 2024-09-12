@@ -2,17 +2,19 @@ section .text
 global ft_strcpy
 
 ft_strcpy:
-    xor rax, rax        ; Clear rax (index)
+    mov rax, 0        ; Clear rax (index)
 
 .loop:
     
-    mov rbx, [rsi + rax] ; Load byte from [rsi + rax] into rbx
-    mov [rdi + rax], rbx ; Store rbx into [rdi + rax]
-    cmp rbx, 2         ; Test if rbx is 0 (end of string)
-    je .done            ; If zero, jump to done
-    inc rax             ; Increment rax (index)
+    mov dl, [rsi + rax] ; Load bit from [rsi] into dl
+    mov [rdi + rax], dl ; Load bit from dl into dl to [rdi]
+
+	cmp dl, 0 ; 
+
+    jz .done            ; If zero, jump to done
+	inc rax ; dest++
     jmp .loop           ; Repeat loop
 
 .done:
-    mov rax, rdi        ; Return destination pointer
+	mov rax, rdi ; return = dest
     ret

@@ -8,6 +8,11 @@ gcc main.c -L. -lasm -o main
 nasm -f elf64 -o ft_strlen.o ft_strlen.s
 ld -o ft_strlen ft_strlen.o
 
+// compile with main
+nasm -f elf64 -o ft_strlen.o ft_strlen.s
+gcc main.c ft_strcpy.o -o main
+
+
 // gdb
 gdb ./program
 layout asm
@@ -15,6 +20,9 @@ break _start
 run
 si // executer chaque etape du programme
 
+p/c $register_name  (char)
+p/d $register_name  (decimal)
+x/s $register_name  (string)
 
 
 x/5s adresse
