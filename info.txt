@@ -36,10 +36,12 @@ uname -a
 Linux made-f0Ar8s1.clusters.42paris.fr 5.15.0-119-generic #129-Ubuntu SMP Fri Aug 2 19:25:20 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
 x86_64
 https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md
-
+; https://android.googlesource.com/kernel/lk/+/dima/for-travis/include/errno.h
+; https://www.tortall.net/projects/yasm/manual/html/objfmt-elf64.html
 
 
 // asm 
 
 %rdi, %rsi, %rdx, %rcx, %r8, and %r9 are used to pass the first six integer
 or pointer parameters to called functions 
+%rax is the return register 

@@ -8,8 +8,8 @@ extern ssize_t ft_write(int fd, const void *buf, size_t count);
 int main() {
     
     int res = 0;
-    char *msg = "hello";
-    res = ft_write(150000000, msg, 2);
+    char *msg = "Hello world!\n";
+    res = ft_read(1, msg, 2);
     printf("res %d\n", res);
     perror("open");
 

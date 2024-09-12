@@ -7,7 +7,7 @@ section .text
     ft_write:
 
         mov rax, 1          ; syscall number for write
-        syscall
+        syscall ; not necessary to pass the arg. It is done automatically sometimes
 
 		cmp rax, 0 ; check for error
         jl .errno           ; Check if there was an error (set sign flag)
@@ -15,7 +15,7 @@ section .text
 
 	.errno:
 		mov rdi, rax ; rdi = error code
-        call __errno_location wrt ..plt ; Call __errno_location to get the address of errno 
+        call __errno_location wrt ..plt ; Call __errno_location to get the address of errno (wrt ..plt to handle a error msg when compiling)
 
 		neg rdi ; sys_write return the error with a negative sign as opposite to the one in errno.h because positive number are reserved to the number of char printed 
 		mov [rax], rdi ; call __errno_location return the adress of errno in rax so we need to put the error in the adress for errno to access it

@@ -2,11 +2,12 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
-
+#include <fcntl.h>  // For open()
 
 extern char ft_strcpy(char *dest, const char *src);
 extern int ft_strcmp(const char *s1, const char *s2);
 extern ssize_t ft_write(int fd, const void *buf, size_t count);
+extern ssize_t ft_read(int fd, void *buf, size_t count);
 
 int main(int argc, char *argv[]) {
 
@@ -16,16 +17,77 @@ int main(int argc, char *argv[]) {
         option = argv[1];
     } 
 
+    if (strcmp(option, "-ft_read") == 0 || strcmp(option, "-all") == 0) {
+        
+        int fd;
+        ssize_t res = 0;
+        char buffer[100];
+        memset(buffer, 0, sizeof(buffer));
+
+        fd = open("./info.txt", O_RDONLY);
+        if (fd < 0) {
+            perror("Failed to open file");
+            return 1;
+        }
+
+        errno = 0;
+        res = read(fd, buffer, 30);
+        printf("read res %ld\n", res);
+        printf("read buffer %s\n", buffer);
+        perror("perror read");
+
+        memset(buffer, 0, sizeof(buffer));
+        errno = 0;
+        res = 0;
+        res = ft_read(fd, buffer, 30);
+        printf("ft_read res %ld\n", res);
+        printf("ft_read buffer %s\n", buffer);
+        perror("perror ft_read");
+
+        memset(buffer, 0, sizeof(buffer));
+        errno = 0;
+        res = read(50000, buffer, 30);
+        printf("read res %ld\n", res);
+        printf("read buffer %s\n", buffer);
+        perror("perror read");
+    
+        memset(buffer, 0, sizeof(buffer));
+        errno = 0;
+        res = 0;
+        res = ft_read(50000, buffer, 30);
+        printf("ft_read res %ld\n", res);
+        printf("ft_read buffer %s\n", buffer);
+        perror("perror ft_read");
+
+
+    }
+
+
     if (strcmp(option, "-ft_write") == 0 || strcmp(option, "-all") == 0) {
 
-        const char *src = NULL;
-        ssize_t res_write = 0;
-        ssize_t res_ft_write = 0;
+        char *src = NULL;
+        char *msg = "Hello world!\n";
 
-        printf("write res = %ld\n", res_write = write(1, src, 2));
-        perror("write res");
-        printf("write res = %ld\n", res_ft_write = ft_write(1, src, 2));
-        perror("open");
+        errno = 0;
+        printf("write ret = %ld\n", write(1, src, 2));
+        perror("perror write");
+        errno = 0;
+        printf("ft_write ret = %ld\n", ft_write(1, src, 2));
+        perror("perror ft_write");
+
+        errno = 0;
+        printf("write ret = %ld\n", write(150000000, src, 2));
+        perror("perror write");
+        errno = 0;
+        printf("ft_write ret = %ld\n", ft_write(150000000, src, 2));
+        perror("perror ft_write");
+
+        errno = 0;
+        printf("write ret = %ld\n", write(1, msg, 6));
+        perror("perror write");
+        errno = 0;
+        printf("ft_write ret = %ld\n", ft_write(1, msg, 6));
+        perror("perror ft_write");
 
     } 
 
