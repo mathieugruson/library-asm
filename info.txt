@@ -6,12 +6,13 @@ gcc main.c -L. -lasm -o main
 // compile
 
 nasm -f elf64 -o ft_strlen.o ft_strlen.s
+    // -f elf64 https://fr.wikipedia.org/wiki/Executable_and_Linkable_Format
+    // 
 ld -o ft_strlen ft_strlen.o
 
 // compile with main
 nasm -f elf64 -o ft_strlen.o ft_strlen.s
-gcc main.c ft_strcpy.o -o main
-
+gcc main.c ft_strcmp.o ft_strcpy.o -o main
 
 // gdb
 gdb ./program
@@ -25,15 +26,20 @@ p/d $register_name  (decimal)
 x/s $register_name  (string)
 
 
-x/5s adresse
-
 https://web.cecs.pdx.edu/~apt/cs491/gdb.pdf
 https://www.lacl.fr/tan/asm
 
 
-syscall
+// syscall
 
 uname -a
 Linux made-f0Ar8s1.clusters.42paris.fr 5.15.0-119-generic #129-Ubuntu SMP Fri Aug 2 19:25:20 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
 x86_64
 https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md
+
+
+
+// asm 
+
+%rdi, %rsi, %rdx, %rcx, %r8, and %r9 are used to pass the first six integer
+or pointer parameters to called functions 

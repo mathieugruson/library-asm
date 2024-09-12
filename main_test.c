@@ -1,14 +1,17 @@
 #include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <errno.h>
 
-extern int add_two_numbers(int a, int b);      // Declaration of the external assembly function
-extern int multiply_two_numbers(int a, int b); // Declaration of the second external function
+extern ssize_t ft_write(int fd, const void *buf, size_t count);
 
 int main() {
-    int sum = add_two_numbers(5, 3);        // Call the add function
-    int product = multiply_two_numbers(5, 3); // Call the multiply function
-
-    printf("The sum is: %d\n", sum);
-    printf("The product is: %d\n", product);
+    
+    int res = 0;
+    char *msg = "hello";
+    res = ft_write(150000000, msg, 2);
+    printf("res %d\n", res);
+    perror("open");
 
     return 0;
 }
