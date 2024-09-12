@@ -12,7 +12,7 @@ ld -o ft_strlen ft_strlen.o
 
 // compile with main
 nasm -f elf64 -o ft_strlen.o ft_strlen.s
-gcc main.c ft_strcmp.o ft_strcpy.o -o main
+gcc main.c ft_strcmp.o ft_strcpy.o ft_write.o ft_read.o ft_strdup.o -o main
 
 // gdb
 gdb ./program
@@ -45,3 +45,5 @@ https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md
 %rdi, %rsi, %rdx, %rcx, %r8, and %r9 are used to pass the first six integer
 or pointer parameters to called functions 
 %rax is the return register 
+push / pop pour mettre et retirer de la stack pour préserver une valeur entre l'appel à des fonctions
+test rax, rax = cmp rax, 0
