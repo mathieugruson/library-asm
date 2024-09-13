@@ -11,8 +11,9 @@ nasm -f elf64 -o ft_strlen.o ft_strlen.s
 ld -o ft_strlen ft_strlen.o
 
 // compile with main
-nasm -f elf64 -o ft_strlen.o ft_strlen.s
-gcc main.c ft_strcmp.o ft_strcpy.o ft_write.o ft_read.o ft_strdup.o -o main
+gcc -o main main.c libasm.a
+
+
 
 // gdb
 gdb ./program
