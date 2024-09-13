@@ -15,7 +15,17 @@ int main(int argc, char *argv[]) {
 
     if (argc > 1) {
         option = argv[1];
-    } 
+    }
+
+
+    if (strcmp(option, "-ft_strlen") == 0 || strcmp(option, "-all") == 0) {
+
+    }
+
+    if (strcmp(option, "-ft_strdup") == 0 || strcmp(option, "-all") == 0) {
+        
+    }
+
 
     if (strcmp(option, "-ft_read") == 0 || strcmp(option, "-all") == 0) {
         
@@ -101,7 +111,7 @@ int main(int argc, char *argv[]) {
 
     } 
     
-    if (strcmp(option, "-ft_strcpy") == 0 || strcmp(option, "-all") == 0) {
+    if (strcmp(option, "-ft_strcmp") == 0 || strcmp(option, "-all") == 0) {
     
     /* int strcmp(const char *s1, const char *s2);
      Cette fonction compare chaque caractere, lorsqu'il y a une difference, elle fait une soustraction et renvoie : 
