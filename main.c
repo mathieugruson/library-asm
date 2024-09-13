@@ -103,7 +103,7 @@ int main(int argc, char *argv[]) {
     }
 
 
-    // // OK 
+    // OK 
     if (strcmp(option, "-ft_read") == 0 || strcmp(option, "-all") == 0) {
         
         int fd;
@@ -221,7 +221,7 @@ int main(int argc, char *argv[]) {
 
     }
 
-
+    // OK
     if (strcmp(option, "-ft_write") == 0 || strcmp(option, "-all") == 0) {
 
         char *src = NULL;
@@ -248,18 +248,108 @@ int main(int argc, char *argv[]) {
         printf("ft_write test 3 = %ld\n", ft_write(1, msg, 6));
         perror("perror ft_write");
 
+        // Writing with zero-length buffer
+        errno = 0;
+        printf("write test 4 = %ld\n", write(1, msg, 0));
+        perror("perror write");
+        errno = 0;
+        printf("ft_write test 4 = %ld\n", ft_write(1, msg, 0));
+        perror("perror ft_write");
+
+        // Writing to a closed file descriptor
+        int fd = open("info.txt", O_CREAT | O_RDWR, 0644);
+        close(fd);
+
+
+        errno = 0;
+        printf("write test 5 = %ld\n", write(fd, msg, 5));
+        perror("perror write");
+        errno = 0;
+        printf("ft_write test 5 = %ld\n", ft_write(fd, msg, 5));
+        perror("perror ft_write");
+
+        // Writing to a file descriptor that is not writable
+        int dir_fd = open("info.txt", O_RDONLY);
+
+        errno = 0;
+        printf("write test 6 = %ld\n", write(dir_fd, msg, 5));
+        perror("perror write");
+        errno = 0;
+        printf("ft_write test 6 = %ld\n", ft_write(dir_fd, msg, 5));
+        perror("perror ft_write");
+
+        close(dir_fd);
+
+        // Writing to a pipe (or a socket)
+
+        int fds[2];
+        pipe(fds);
+
+        errno = 0;
+        printf("write test 7 = %ld\n", write(fds[1], msg, 5));
+        perror("perror write");
+        errno = 0;
+        printf("ft_write test 7 = %ld\n", ft_write(fds[1], msg, 5));
+        perror("perror ft_write");
+
+        close(fds[0]);
+        close(fds[1]);
+
     } 
 
+
+    // OK 
     if (strcmp(option, "-ft_strcpy") == 0 || strcmp(option, "-all") == 0) {
 
-        char dest[100];
-        const char *src = "He";
-        ft_strcpy(dest, src);
-        printf("Copied string: %s\n", dest);
-        printf("Copied string: %d\n", 1);
+        // Test 1: Basic test with a normal string
+        const char *src = "Hello, World!";
+        char dest_strcpy[100];
+        char dest_ft_strcpy[100];
+        strcpy(dest_strcpy, src);
+        ft_strcpy(dest_ft_strcpy, src);
+        printf("Source string: \"%s\"\n", src);
+        printf("strcpy result: \"%s\"\n", dest_strcpy);
+        printf("ft_strcpy result: \"%s\"\n", dest_ft_strcpy);
+        printf("Test result: %s\n\n", strcmp(dest_strcpy, dest_ft_strcpy) == 0 ? "PASS" : "FAIL");
 
-    } 
+        // Test 2: Empty string
+        const char *src = "";
+        char dest_strcpy[100];
+        char dest_ft_strcpy[100];
+        strcpy(dest_strcpy, src);
+        ft_strcpy(dest_ft_strcpy, src);
+        printf("Source string: \"%s\"\n", src);
+        printf("strcpy result: \"%s\"\n", dest_strcpy);
+        printf("ft_strcpy result: \"%s\"\n", dest_ft_strcpy);
+        printf("Test result: %s\n\n", strcmp(dest_strcpy, dest_ft_strcpy) == 0 ? "PASS" : "FAIL");
+
+        // Test 3: Single character
+        const char *src = "A";
+        char dest_strcpy[100];
+        char dest_ft_strcpy[100];
+        strcpy(dest_strcpy, src);
+        ft_strcpy(dest_ft_strcpy, src);
+        printf("Source string: \"%s\"\n", src);
+        printf("strcpy result: \"%s\"\n", dest_strcpy);
+        printf("ft_strcpy result: \"%s\"\n", dest_ft_strcpy);
+        printf("Test result: %s\n\n", strcmp(dest_strcpy, dest_ft_strcpy) == 0 ? "PASS" : "FAIL");
+
+        // Test 4: Long string
+        const char *src = "This is a very long string, but it fits within the buffer!";
+        char dest_strcpy[100];
+        char dest_ft_strcpy[100];
+        strcpy(dest_strcpy, src);
+        ft_strcpy(dest_ft_strcpy, src);
+        printf("Source string: \"%s\"\n", src);
+        printf("strcpy result: \"%s\"\n", dest_strcpy);
+        printf("ft_strcpy result: \"%s\"\n", dest_ft_strcpy);
+        printf("Test result: %s\n\n", strcmp(dest_strcpy, dest_ft_strcpy) == 0 ? "PASS" : "FAIL");
+    }
+
+
     
+    
+    // OK
     if (strcmp(option, "-ft_strcmp") == 0 || strcmp(option, "-all") == 0) {
     
     /* int strcmp(const char *s1, const char *s2);
