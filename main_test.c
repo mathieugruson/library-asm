@@ -3,13 +3,12 @@
 #include <unistd.h>
 #include <errno.h>
 
-extern ssize_t ft_write(int fd, const void *buf, size_t count);
+extern int ft_strcmp(const char *s1, const char *s2);
 
 int main() {
     
-    char *msg = "He";
     errno = 0;
-    ft_write(500000, msg, 2);
+    ft_strcmp("mB", "mBa");
 
     return 0;
 }

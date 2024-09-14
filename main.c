@@ -156,6 +156,21 @@ void compare_strcpy_and_print(const char *test_name, const char *src) {
     }
 }
 
+
+void compare_strcmp_and_print(const char *test_name, const char *str1, const char *str2) {
+    int strcmp_result = strcmp(str1, str2);
+    int ft_strcmp_result = ft_strcmp(str1, str2);
+
+    printf("strcmp %s result: %d\n", test_name, strcmp_result);
+    printf("ft_strcmp %s result: %d\n", test_name, ft_strcmp_result);
+
+    if (strcmp_result == ft_strcmp_result) {
+        printf(COLOR_GREEN "%s: PASS\n" COLOR_RESET "\n", test_name);
+    } else {
+        printf(COLOR_RED "%s: FAIL\n" COLOR_RESET "\n", test_name);
+    }
+}
+
 int main(int argc, char *argv[]) {
 
     char *option = "\0";
@@ -324,53 +339,33 @@ int main(int argc, char *argv[]) {
      sur la table ascii
     */
 
-        int strcmp_result = 0;
-        int ft_strcmp_result = 0;
+    // Test 1: "B" vs "A"
+    compare_strcmp_and_print("Test 1", "B", "A");
 
-        strcmp_result = strcmp("B", "A");
-        printf("strcmp 2 result %d\n", strcmp_result);
-        ft_strcmp_result = ft_strcmp("B", "A");
-        printf("ft_strcmp 2 result %d\n", ft_strcmp_result);
+    // Test 2: "B" vs "B"
+    compare_strcmp_and_print("Test 2", "B", "B");
 
-        strcmp_result = strcmp("B", "B");
-        printf("strcmp 3 result %d\n", strcmp_result);
-        ft_strcmp_result = ft_strcmp("B", "B");
-        printf("ft_strcmp 3 result %d\n", ft_strcmp_result);
-        
-        strcmp_result = strcmp("B", "C");
-        printf("strcmp 4 result %d\n", strcmp_result);
-        ft_strcmp_result = ft_strcmp("B", "C");
-        printf("ft_strcmp 4 result %d\n", ft_strcmp_result);
+    // Test 3: "B" vs "C"
+    compare_strcmp_and_print("Test 3", "B", "C");
 
-        strcmp_result = strcmp("mB", "mA");
-        printf("strcmp 5 result %d\n", strcmp_result);
-        ft_strcmp_result = ft_strcmp("mB", "mA");
-        printf("ft_strcmp 5 result %d\n", ft_strcmp_result);
+    // Test 4: "mB" vs "mA"
+    compare_strcmp_and_print("Test 4", "mB", "mA");
 
-        strcmp_result = strcmp("mB", "mB");
-        printf("strcmp 6 result %d\n", strcmp_result);
-        ft_strcmp_result = ft_strcmp("mB", "mB");
-        printf("ft_strcmp 6 result %d\n", ft_strcmp_result);
+    // Test 5: "mB" vs "mB"
+    compare_strcmp_and_print("Test 5", "mB", "mB");
 
-        strcmp_result = strcmp("mB", "mC");
-        printf("strcmp 7 result %d\n", strcmp_result);
-        ft_strcmp_result = ft_strcmp("mB", "mC");
-        printf("ft_strcmp 7 result %d\n", ft_strcmp_result);
+    // Test 6: "mB" vs "mC"
+    compare_strcmp_and_print("Test 6", "mB", "mC");
 
-        strcmp_result = strcmp("mB", "mAka");
-        printf("strcmp 8 result %d\n", strcmp_result);
-        ft_strcmp_result = ft_strcmp("mB", "mAka");
-        printf("ft_strcmp 8 result %d\n", ft_strcmp_result);
+    // Test 7: "mB" vs "mAka"
+    compare_strcmp_and_print("Test 7", "mB", "mAka");
 
-        strcmp_result = strcmp("mB", "mBa");
-        printf("strcmp 9 result %d\n", strcmp_result);
-        ft_strcmp_result = ft_strcmp("mB", "mBa");
-        printf("ft_strcmp 9 result %d\n", ft_strcmp_result);
+    // Test 8: "mB" vs "mBa"
+    compare_strcmp_and_print("Test 8", "mB", "mBa");
 
-        strcmp_result = strcmp("mBa", "mB");
-        printf("strcmp 10 result %d\n", strcmp_result);
-        ft_strcmp_result = ft_strcmp("mBa", "mB");
-        printf("ft_strcmp 10 result %d\n", ft_strcmp_result);
+    // Test 9: "mBa" vs "mB"
+    compare_strcmp_and_print("Test 9", "mBa", "mB");
+
     
     }
     
