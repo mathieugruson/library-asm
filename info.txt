@@ -4,11 +4,11 @@ gcc main.c -L. -lasm -o main
 
 
 // compile
-
 nasm -f elf64 -o ft_strlen.o ft_strlen.s
     // -f elf64 https://fr.wikipedia.org/wiki/Executable_and_Linkable_Format
     // 
 ld -o ft_strlen ft_strlen.o
+
 
 // compile with main
 gcc -o main main.c libasm.a
@@ -25,6 +25,7 @@ si // executer chaque etape du programme
 p/c $register_name  (char)
 p/d $register_name  (decimal)
 x/s $register_name  (string)
+x/16d $rsp (pour regarder les valeurs sur la stack)
 
 
 https://web.cecs.pdx.edu/~apt/cs491/gdb.pdf

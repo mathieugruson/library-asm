@@ -3,15 +3,13 @@
 #include <unistd.h>
 #include <errno.h>
 
-extern char	*ft_strdup(const char *s);
+extern ssize_t ft_write(int fd, const void *buf, size_t count);
 
 int main() {
     
     char *msg = "He";
-    char *res;
-    res = ft_strdup(msg);
-    printf("res %s\n", res);
-    perror("open");
+    errno = 0;
+    ft_write(500000, msg, 2);
 
     return 0;
 }
