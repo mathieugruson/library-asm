@@ -82,6 +82,79 @@ void ft_strdup_test(void) {
     }
 }
 
+void compare_strlen_and_print(const char *test_name, const char *input) {
+    size_t strlen_result = strlen(input);
+    size_t ft_strlen_result = ft_strlen(input);
+
+    printf("strlen %s: %ld\n", test_name, strlen_result);
+    printf("ft_strlen %s: %ld\n", test_name, ft_strlen_result);
+
+    if (strlen_result == ft_strlen_result) {
+        printf(COLOR_GREEN "%s: OK\n" COLOR_RESET, test_name);
+    } else {
+        printf(COLOR_RED "%s: FAIL\n" COLOR_RESET, test_name);
+    }
+}
+
+void compare_read_and_print(const char *test_name, int fd, char *buffer, ssize_t size) {
+    errno = 0;
+    ssize_t res_read = read(fd, buffer, size);
+    printf("read %s: %ld\n", test_name, res_read);
+    printf("read buffer %s: %s\n", test_name, buffer);
+    perror("perror read");
+
+    memset(buffer, 0, size);
+    errno = 0;
+    ssize_t res_ft_read = ft_read(fd, buffer, size);
+    printf("ft_read %s: %ld\n", test_name, res_ft_read);
+    printf("ft_read buffer %s: %s\n", test_name, buffer);
+    perror("perror ft_read");
+
+    if (res_read == res_ft_read) {
+        printf(COLOR_GREEN "%s: OK\n" COLOR_RESET, test_name);
+    } else {
+        printf(COLOR_RED "%s: FAIL\n" COLOR_RESET, test_name);
+    }
+}
+
+void compare_write_and_print(const char *test_name, int fd, const char *buffer, size_t size) {
+    errno = 0;  // Reset errno before calling ft_write
+    ssize_t res_write = write(fd, buffer, size);
+    printf("write %s = %ld\n", test_name, res_write);
+    perror("perror write");
+
+    errno = 0;  // Reset errno before calling ft_write
+    ssize_t res_ft_write = ft_write(fd, buffer, size);
+    printf("ft_write %s = %ld\n", test_name, res_ft_write);
+    perror("perror ft_write");
+
+    if (res_write == res_ft_write) {
+        printf(COLOR_GREEN "%s: OK\n" COLOR_RESET, test_name);
+    } else {
+        printf(COLOR_RED "%s: FAIL\n" COLOR_RESET, test_name);
+    }
+}
+
+void compare_strcpy_and_print(const char *test_name, const char *src) {
+    char dest_strcpy[100];
+    char dest_ft_strcpy[100];
+
+    // Perform the copy
+    strcpy(dest_strcpy, src);
+    ft_strcpy(dest_ft_strcpy, src);
+
+    // Print source and results
+    printf("Source string: \"%s\"\n", src);
+    printf("strcpy result: \"%s\"\n", dest_strcpy);
+    printf("ft_strcpy result: \"%s\"\n", dest_ft_strcpy);
+
+    // Compare results and print test result
+    if (strcmp(dest_strcpy, dest_ft_strcpy) == 0) {
+        printf(COLOR_GREEN "%s: PASS\n" COLOR_RESET "\n", test_name);
+    } else {
+        printf(COLOR_RED "%s: FAIL\n" COLOR_RESET "\n", test_name);
+    }
+}
 
 int main(int argc, char *argv[]) {
 
@@ -94,22 +167,29 @@ int main(int argc, char *argv[]) {
     // OK
     if (strcmp(option, "-ft_strlen") == 0 || strcmp(option, "-all") == 0) {
 
-        char *null = NULL ;
-        
-        printf("strlen test 1 %ld\n", strlen("Hello world!"));
-        printf("ft_strlen test 1 %ld\n", ft_strlen("Hello world!"));
-        printf("strlen test 2 %ld\n", strlen(""));
-        printf("ft_strlen test 2 %ld\n", ft_strlen(""));
-        printf("strlen test 2 %ld\n", strlen("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
-        printf("ft_strlen test 2 %ld\n", ft_strlen("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
-        if (0) {
-            printf("strlen test 3 %ld\n", strlen(null));
-            printf("ft_strlen test 3 %ld\n", ft_strlen(null));
-        
+       char *null = NULL;
+    
+    // Test 1: Normal string
+    compare_strlen_and_print("Test 1", "Hello world!");
+    
+    // Test 2: Empty string
+    compare_strlen_and_print("Test 2", "");
+    
+    // Test 3: Long string
+    compare_strlen_and_print("Test 3", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    
+    // Test 4: NULL input (undefined behavior in the real strlen, so it's commented out)
+    if (0) {
+        printf("strlen test 4 %ld\n", strlen(null));
+        printf("ft_strlen test 4 %ld\n", ft_strlen(null));
+    }
 
-            size_t large_size = SIZE_MAX - 1; // Close to the size limit
-            char *large_buffer = (char *)malloc(large_size);
-            
+    // Simulating large buffer test
+    if (0) {
+        size_t large_size = SIZE_MAX - 1; // Close to the size limit
+        char *large_buffer = (char *)malloc(large_size);
+        
+        if (large_buffer != NULL) {
             memset(large_buffer, 'a', large_size - 1);
             large_buffer[large_size - 1] = '\0'; // Null-terminate the string
 
@@ -118,6 +198,7 @@ int main(int argc, char *argv[]) {
 
             free(large_buffer); // Always free dynamically allocated memory
         }
+    }
 
     }
 
@@ -126,247 +207,90 @@ int main(int argc, char *argv[]) {
         
         ft_strdup_test();
         
-
-        // char *null = NULL;
-        
-        // // Test 1: Normal string
-        // char *original = "Hello world!";
-        // char *dup = strdup(original);
-        // char *ft_dup = ft_strdup(original);
-
-        // printf("strdup test 1: %s\n", dup);
-        // printf("ft_strdup test 1: %s\n", ft_dup);
-
-        // free(dup);
-        // free(ft_dup);
-        
-        // // Test 2: Empty string
-        // original = "";
-        // dup = strdup(original);
-        // ft_dup = ft_strdup(original);
-
-        // printf("strdup test 2: %s\n", dup);
-        // printf("ft_strdup test 2: %s\n", ft_dup);
-
-        // free(dup);
-        // free(ft_dup);
-
-        // // Test 3: Long string
-        // original = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-        // dup = strdup(original);
-        // ft_dup = ft_strdup(original);
-
-        // printf("strdup test 3: %s\n", dup);
-        // printf("ft_strdup test 3: %s\n", ft_dup);
-
-        // free(dup);
-        // free(ft_dup);
-        
-        // // Test 4: NULL input (undefined behavior in the real strdup, so this test is mostly for your custom function)
-        // if (0) {
-        //     dup = strdup(null); // This will likely cause a segmentation fault, so it's disabled
-        //     ft_dup = ft_strdup(null); // Same here
-
-        //     printf("strdup test 4: %s\n", dup ? dup : "(null)");
-        //     printf("ft_strdup test 4: %s\n", ft_dup ? ft_dup : "(null)");
-
-        //     free(dup);
-        //     free(ft_dup);
-        // }
     }
 
 
     // OK 
     if (strcmp(option, "-ft_read") == 0 || strcmp(option, "-all") == 0) {
         
-        int fd;
-        ssize_t res = 0;
-        char buffer[100];
-        memset(buffer, 0, sizeof(buffer));
+    char buffer[100];
+    memset(buffer, 0, sizeof(buffer));
+    ssize_t res = 0;
 
-        fd = open("./info.txt", O_RDONLY);
-        if (fd < 0) {
-            perror("Failed to open file");
-            return 1;
-        }
+    // Test 1: Read from a regular file
+    int fd = open("./info.txt", O_RDONLY);
+    if (fd < 0) {
+        perror("Failed to open file");
+        return 1;
+    }
+    compare_read_and_print("Test 1", fd, buffer, 30);
+    close(fd);
 
-        // Test 1: Read from a regular file
-        errno = 0;
-        res = read(fd, buffer, 30);
-        printf("read res 1 %ld\n", res);
-        printf("read buffer 1 %s\n", buffer);
-        perror("perror read 1");
+    // Test 2: Reading from an invalid file descriptor (50000)
+    compare_read_and_print("Test 2", 50000, buffer, 30);
 
-        memset(buffer, 0, sizeof(buffer));
-        errno = 0;
-        res = 0;
-        res = ft_read(fd, buffer, 30);
-        printf("ft_read res 1 %ld\n", res);
-        printf("ft_read buffer 1  %s\n", buffer);
-        perror("perror ft_read 1");
+    // Test 3: Read from a closed file descriptor
+    int fd3 = open("./info.txt", O_RDONLY);
+    if (fd3 < 0) {
+        perror("Failed to open file");
+        return 1;
+    }
+    close(fd3);  // Close file descriptor
+    compare_read_and_print("Test 3", fd3, buffer, 30);
 
-        // Test 2: Reading from an invalid file descriptor (50000)
-        memset(buffer, 0, sizeof(buffer));
-        errno = 0;
-        res = read(50000, buffer, 30);
-        printf("read res 2 %ld\n", res);
-        printf("read buffer 2 %s\n", buffer);
-        perror("perror read 2");
-    
-        memset(buffer, 0, sizeof(buffer));
-        errno = 0;
-        res = 0;
-        res = ft_read(50000, buffer, 30);
-        printf("ft_read res 2 %ld\n", res);
-        printf("ft_read buffer 2 %s\n", buffer);
-        perror("perror ft_read 2");
+    // Test 4: Read from /dev/null (should return 0)
+    int fd4 = open("/dev/null", O_RDONLY);
+    if (fd4 < 0) {
+        perror("Failed to open /dev/null");
+        return 1;
+    }
+    compare_read_and_print("Test 4", fd4, buffer, 30);
+    close(fd4);
 
-        // Test 3: Read from closed file descriptor
-        int fd3;
-        fd3 = open("./info.txt", O_RDONLY);
-        if (fd < 0) {
-            perror("Failed to open file");
-            return 1;
-        }
-
-        close(fd3);
-
-        memset(buffer, 0, sizeof(buffer));
-        errno = 0;
-        res = read(fd3, buffer, 30);
-        printf("read res 3 %ld\n", res);
-        printf("read buffer 3 %s\n", buffer);
-        perror("perror read 3");
-    
-        memset(buffer, 0, sizeof(buffer));
-        errno = 0;
-        res = 0;
-        res = ft_read(fd3, buffer, 30);
-        printf("ft_read res 3 %ld\n", res);
-        printf("ft_read buffer 3 %s\n", buffer);
-        perror("perror ft_read 3");
-
-        // Test 4 : Read from /dev/null (should return 0)
-        int fd4;
-        fd4 = open("/dev/null", O_RDONLY);
-        if (fd < 0) {
-                perror("Failed to open /dev/null");
-                return 1;
-            }
-
-        memset(buffer, 0, sizeof(buffer));
-        errno = 0;
-        res = read(fd4, buffer, 30);
-        printf("read res 4 %ld\n", res);
-        printf("read buffer 4 %s\n", buffer);
-        perror("perror read 4");
-    
-        memset(buffer, 0, sizeof(buffer));
-        errno = 0;
-        res = 0;
-        res = ft_read(fd4, buffer, 30);
-        printf("ft_read res 4 %ld\n", res);
-        printf("ft_read buffer 4 %s\n", buffer);
-        perror("perror ft_read 4");
-
-        // Test 5 : Read from a directory
-
-        int fd5;
-        fd = open(".", O_RDONLY);
-        if (fd < 0) {
-            perror("Failed to open directory");
-            return 1;
-        }
-        memset(buffer, 0, sizeof(buffer));
-        errno = 0;
-        res = read(fd5, buffer, 30);
-        printf("read res 5 %ld\n", res);
-        printf("read buffer 5 %s\n", buffer);
-        perror("perror read 5");
-    
-        memset(buffer, 0, sizeof(buffer));
-        errno = 0;
-        res = 0;
-        res = ft_read(fd5, buffer, 40);
-        printf("ft_read res 5 %ld\n", res);
-        printf("ft_read buffer 5 %s\n", buffer);
-        perror("perror ft_read 5");
-
+    // Test 5: Read from a directory
+    int fd5 = open(".", O_RDONLY);
+    if (fd5 < 0) {
+        perror("Failed to open directory");
+        return 1;
+    }
+    compare_read_and_print("Test 5", fd5, buffer, 30);
+    close(fd5);
     }
 
     // OK
     if (strcmp(option, "-ft_write") == 0 || strcmp(option, "-all") == 0) {
 
         char *src = NULL;
-        char *msg = "Hello world!\n";
+    char *msg = "Hello world!\n";
+    
+    // Test 1: Write from NULL pointer
+    compare_write_and_print("Test 1", 1, src, 2);
 
-        errno = 0;
-        printf("write test 1 = %ld\n", write(1, src, 2));
-        perror("perror write");
-        errno = 0;
-        printf("ft_write test 1 = %ld\n", ft_write(1, src, 2));
-        perror("perror ft_write");
+    // Test 2: Writing to an invalid file descriptor
+    compare_write_and_print("Test 2", 150000000, src, 2);
 
-        errno = 0;
-        printf("write test 2 = %ld\n", write(150000000, src, 2));
-        perror("perror write");
-        errno = 0;
-        printf("ft_write test 2 = %ld\n", ft_write(150000000, src, 2));
-        perror("perror ft_write");
+    // Test 3: Write a valid string to stdout
+    compare_write_and_print("Test 3", 1, msg, 6);
 
-        errno = 0;
-        printf("write test 3 = %ld\n", write(1, msg, 6));
-        perror("perror write");
-        errno = 0;
-        printf("ft_write test 3 = %ld\n", ft_write(1, msg, 6));
-        perror("perror ft_write");
+    // Test 4: Writing with zero-length buffer
+    compare_write_and_print("Test 4", 1, msg, 0);
 
-        // Writing with zero-length buffer
-        errno = 0;
-        printf("write test 4 = %ld\n", write(1, msg, 0));
-        perror("perror write");
-        errno = 0;
-        printf("ft_write test 4 = %ld\n", ft_write(1, msg, 0));
-        perror("perror ft_write");
+    // Test 5: Writing to a closed file descriptor
+    int fd = open("info.txt", O_CREAT | O_RDWR, 0644);
+    close(fd);
+    compare_write_and_print("Test 5", fd, msg, 5);
 
-        // Writing to a closed file descriptor
-        int fd = open("info.txt", O_CREAT | O_RDWR, 0644);
-        close(fd);
+    // Test 6: Writing to a file descriptor that is not writable (read-only)
+    int dir_fd = open("info.txt", O_RDONLY);
+    compare_write_and_print("Test 6", dir_fd, msg, 5);
+    close(dir_fd);
 
-
-        errno = 0;
-        printf("write test 5 = %ld\n", write(fd, msg, 5));
-        perror("perror write");
-        errno = 0;
-        printf("ft_write test 5 = %ld\n", ft_write(fd, msg, 5));
-        perror("perror ft_write");
-
-        // Writing to a file descriptor that is not writable
-        int dir_fd = open("info.txt", O_RDONLY);
-
-        errno = 0;
-        printf("write test 6 = %ld\n", write(dir_fd, msg, 5));
-        perror("perror write");
-        errno = 0;
-        printf("ft_write test 6 = %ld\n", ft_write(dir_fd, msg, 5));
-        perror("perror ft_write");
-
-        close(dir_fd);
-
-        // Writing to a pipe (or a socket)
-
-        int fds[2];
-        pipe(fds);
-
-        errno = 0;
-        printf("write test 7 = %ld\n", write(fds[1], msg, 5));
-        perror("perror write");
-        errno = 0;
-        printf("ft_write test 7 = %ld\n", ft_write(fds[1], msg, 5));
-        perror("perror ft_write");
-
-        close(fds[0]);
-        close(fds[1]);
+    // Test 7: Writing to a pipe
+    int fds[2];
+    pipe(fds);
+    compare_write_and_print("Test 7", fds[1], msg, 5);
+    close(fds[0]);
+    close(fds[1]);
 
     } 
 
@@ -374,49 +298,17 @@ int main(int argc, char *argv[]) {
     // OK 
     if (strcmp(option, "-ft_strcpy") == 0 || strcmp(option, "-all") == 0) {
 
-        // Test 1: Basic test with a normal string
-        const char *src = "Hello, World!";
-        char dest_strcpy[100];
-        char dest_ft_strcpy[100];
-        strcpy(dest_strcpy, src);
-        ft_strcpy(dest_ft_strcpy, src);
-        printf("Source string: \"%s\"\n", src);
-        printf("strcpy result: \"%s\"\n", dest_strcpy);
-        printf("ft_strcpy result: \"%s\"\n", dest_ft_strcpy);
-        printf("Test result: %s\n\n", strcmp(dest_strcpy, dest_ft_strcpy) == 0 ? "PASS" : "FAIL");
+    compare_strcpy_and_print("Test 1: Normal string", "Hello, World!");
 
-        // Test 2: Empty string
-        const char *src2 = "";
-        char dest_strcpy2[100];
-        char dest_ft_strcpy2[100];
-        strcpy(dest_strcpy2, src2);
-        ft_strcpy(dest_ft_strcpy2, src2);
-        printf("Source string: \"%s\"\n", src2);
-        printf("strcpy result: \"%s\"\n", dest_strcpy2);
-        printf("ft_strcpy result: \"%s\"\n", dest_ft_strcpy2);
-        printf("Test result: %s\n\n", strcmp(dest_strcpy2, dest_ft_strcpy2) == 0 ? "PASS" : "FAIL");
+    // Test 2: Empty string
+    compare_strcpy_and_print("Test 2: Empty string", "");
 
-        // Test 3: Single character
-        const char *src3 = "A";
-        char dest_strcpy3[100];
-        char dest_ft_strcpy3[100];
-        strcpy(dest_strcpy3, src3);
-        ft_strcpy(dest_ft_strcpy3, src3);
-        printf("Source string: \"%s\"\n", src3);
-        printf("strcpy result: \"%s\"\n", dest_strcpy3);
-        printf("ft_strcpy result: \"%s\"\n", dest_ft_strcpy3);
-        printf("Test result: %s\n\n", strcmp(dest_strcpy3, dest_ft_strcpy) == 0 ? "PASS" : "FAIL");
+    // Test 3: Single character
+    compare_strcpy_and_print("Test 3: Single character", "A");
 
-        // Test 4: Long string
-        const char *src4 = "This is a very long string, but it fits within the buffer!";
-        char dest_strcpy4[100];
-        char dest_ft_strcpy4[100];
-        strcpy(dest_strcpy4, src4);
-        ft_strcpy(dest_ft_strcpy4, src4);
-        printf("Source string: \"%s\"\n", src4);
-        printf("strcpy result: \"%s\"\n", dest_strcpy4);
-        printf("ft_strcpy result: \"%s\"\n", dest_ft_strcpy4);
-        printf("Test result: %s\n\n", strcmp(dest_strcpy4, dest_ft_strcpy4) == 0 ? "PASS" : "FAIL");
+    // Test 4: Long string
+    compare_strcpy_and_print("Test 4: Long string", "This is a very long string, but it fits within the buffer!");
+
     }
 
 
