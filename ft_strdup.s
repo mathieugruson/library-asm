@@ -5,7 +5,7 @@ extern ft_strlen
 extern ft_strcpy
 
 ft_strdup:
-    push rdi                  ; save pointer to string for later
+    push rdi                  ; save pointer to string for later on stack
 
     call ft_strlen            ; get length of original string
     add rax, 1                ; include space for terminating null byte
@@ -16,8 +16,7 @@ ft_strdup:
     cmp rax, 0                ; check if malloc succeeded
     jz .end                   ; if not, skip to end and return NULL
 
-    pop rdi                   ; restore original string pointer
-    mov rsi, rdi              ; source string for copy
+    pop rsi                   ; restore original string pointer
     mov rdi, rax              ; destination for copy (malloc'd memory)
     call ft_strcpy            ; perform the string copy
 
