@@ -3,13 +3,14 @@ section .text
 
     ft_strlen:
 
-    mov rax, 0
+    mov rax, 0 ; Clear rax, will be used to store the length (xor rax, rax is the same)
 
-    .count_loop:
-        cmp byte [rdi + rax], 0        ; Compare the byte at RDI with 0 (null terminator)
-        je .done                 ; If zero, jump to the end
-        inc rax                  ; Move to the next character
-        jmp .count_loop          ; Repeat the loop
+
+    .loop:
+        cmp byte [rdi + rax], 0      ; Compare current byte to null terminator
+        je .done                     ; If null terminator is found, exit the loop
+        inc rax                      ; Increment rax (string length counter)
+        jmp .loop                    ; Repeat the loop
 
     .done:
-        ret                      ; Return
+        ret                      ; Return the length in rax

@@ -12,7 +12,7 @@ ft_strcpy:
 	cmp dl, 0 ; 
 
     jz .done            ; If zero, jump to done
-	inc rax ; dest++
+	inc rax ; 
     jmp .loop           ; Repeat loop
 
 .done:

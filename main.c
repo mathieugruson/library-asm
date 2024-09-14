@@ -313,42 +313,40 @@ int main(int argc, char *argv[]) {
         printf("Test result: %s\n\n", strcmp(dest_strcpy, dest_ft_strcpy) == 0 ? "PASS" : "FAIL");
 
         // Test 2: Empty string
-        const char *src = "";
-        char dest_strcpy[100];
-        char dest_ft_strcpy[100];
-        strcpy(dest_strcpy, src);
-        ft_strcpy(dest_ft_strcpy, src);
-        printf("Source string: \"%s\"\n", src);
-        printf("strcpy result: \"%s\"\n", dest_strcpy);
-        printf("ft_strcpy result: \"%s\"\n", dest_ft_strcpy);
-        printf("Test result: %s\n\n", strcmp(dest_strcpy, dest_ft_strcpy) == 0 ? "PASS" : "FAIL");
+        const char *src2 = "";
+        char dest_strcpy2[100];
+        char dest_ft_strcpy2[100];
+        strcpy(dest_strcpy2, src2);
+        ft_strcpy(dest_ft_strcpy2, src2);
+        printf("Source string: \"%s\"\n", src2);
+        printf("strcpy result: \"%s\"\n", dest_strcpy2);
+        printf("ft_strcpy result: \"%s\"\n", dest_ft_strcpy2);
+        printf("Test result: %s\n\n", strcmp(dest_strcpy2, dest_ft_strcpy2) == 0 ? "PASS" : "FAIL");
 
         // Test 3: Single character
-        const char *src = "A";
-        char dest_strcpy[100];
-        char dest_ft_strcpy[100];
-        strcpy(dest_strcpy, src);
-        ft_strcpy(dest_ft_strcpy, src);
-        printf("Source string: \"%s\"\n", src);
-        printf("strcpy result: \"%s\"\n", dest_strcpy);
-        printf("ft_strcpy result: \"%s\"\n", dest_ft_strcpy);
-        printf("Test result: %s\n\n", strcmp(dest_strcpy, dest_ft_strcpy) == 0 ? "PASS" : "FAIL");
+        const char *src3 = "A";
+        char dest_strcpy3[100];
+        char dest_ft_strcpy3[100];
+        strcpy(dest_strcpy3, src3);
+        ft_strcpy(dest_ft_strcpy3, src3);
+        printf("Source string: \"%s\"\n", src3);
+        printf("strcpy result: \"%s\"\n", dest_strcpy3);
+        printf("ft_strcpy result: \"%s\"\n", dest_ft_strcpy3);
+        printf("Test result: %s\n\n", strcmp(dest_strcpy3, dest_ft_strcpy) == 0 ? "PASS" : "FAIL");
 
         // Test 4: Long string
-        const char *src = "This is a very long string, but it fits within the buffer!";
-        char dest_strcpy[100];
-        char dest_ft_strcpy[100];
-        strcpy(dest_strcpy, src);
-        ft_strcpy(dest_ft_strcpy, src);
-        printf("Source string: \"%s\"\n", src);
-        printf("strcpy result: \"%s\"\n", dest_strcpy);
-        printf("ft_strcpy result: \"%s\"\n", dest_ft_strcpy);
-        printf("Test result: %s\n\n", strcmp(dest_strcpy, dest_ft_strcpy) == 0 ? "PASS" : "FAIL");
+        const char *src4 = "This is a very long string, but it fits within the buffer!";
+        char dest_strcpy4[100];
+        char dest_ft_strcpy4[100];
+        strcpy(dest_strcpy4, src4);
+        ft_strcpy(dest_ft_strcpy4, src4);
+        printf("Source string: \"%s\"\n", src4);
+        printf("strcpy result: \"%s\"\n", dest_strcpy4);
+        printf("ft_strcpy result: \"%s\"\n", dest_ft_strcpy4);
+        printf("Test result: %s\n\n", strcmp(dest_strcpy4, dest_ft_strcpy4) == 0 ? "PASS" : "FAIL");
     }
 
 
-    
-    
     // OK
     if (strcmp(option, "-ft_strcmp") == 0 || strcmp(option, "-all") == 0) {
     
