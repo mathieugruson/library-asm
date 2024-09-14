@@ -12,8 +12,7 @@ ft_strcmp:
     jz .end_string       ; If end of s1, jump to end_string to determine result
 
     cmp dl, dh           ; Compare current bytes of s1 and s2
-    jl .end_string        ; If s1 byte is less than s2 byte, jump to s1_lesser
-    jg .end_string       ; If s1 byte is greater than s2 byte, jump to s1_greater
+    jne .end_string        ; If s1 byte is less than s2 byte, jump to s1_lesser
 
     inc rax              ; Increment index (rax) to move to the next character
     jmp .loop             ; If characters are equal, loop to compare the next characters
