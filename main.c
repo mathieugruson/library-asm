@@ -13,6 +13,76 @@ extern ssize_t ft_read(int fd, void *buf, size_t count);
 extern size_t ft_strlen(const char *s);
 extern char *ft_strdup(const char *s);
 
+
+#define COLOR_RESET   "\x1b[0m"
+#define COLOR_RED     "\x1b[31m"
+#define COLOR_GREEN   "\x1b[32m"
+
+void compare_and_print(const char *test_name, const char *dup, const char *ft_dup) {
+    if (strcmp(dup, ft_dup) == 0) {
+        printf(COLOR_GREEN "%s: OK\n" COLOR_RESET, test_name);
+    } else {
+        printf(COLOR_RED "%s: FAIL\n" COLOR_RESET, test_name);
+    }
+}
+
+void ft_strdup_test(void) {
+    
+ char *null = NULL;
+    
+    // Test 1: Normal string
+    char *original = "Hello world!";
+    char *dup = strdup(original);
+    char *ft_dup = ft_strdup(original);
+
+    printf("strdup test 1: %s\n", dup);
+    printf("ft_strdup test 1: %s\n", ft_dup);
+    
+    compare_and_print("Test 1", dup, ft_dup);
+
+    free(dup);
+    free(ft_dup);
+    
+    // Test 2: Empty string
+    original = "";
+    dup = strdup(original);
+    ft_dup = ft_strdup(original);
+
+    printf("strdup test 2: %s\n", dup);
+    printf("ft_strdup test 2: %s\n", ft_dup);
+
+    compare_and_print("Test 2", dup, ft_dup);
+
+    free(dup);
+    free(ft_dup);
+
+    // Test 3: Long string
+    original = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    dup = strdup(original);
+    ft_dup = ft_strdup(original);
+
+    printf("strdup test 3: %s\n", dup);
+    printf("ft_strdup test 3: %s\n", ft_dup);
+
+    compare_and_print("Test 3", dup, ft_dup);
+
+    free(dup);
+    free(ft_dup);
+    
+    // Test 4: NULL input (undefined behavior in the real strdup, so this test is mostly for your custom function)
+    if (0) {
+        dup = strdup(null); // This will likely cause a segmentation fault, so it's disabled
+        ft_dup = ft_strdup(null); // Same here
+
+        printf("strdup test 4: %s\n", dup ? dup : "(null)");
+        printf("ft_strdup test 4: %s\n", ft_dup ? ft_dup : "(null)");
+
+        free(dup);
+        free(ft_dup);
+    }
+}
+
+
 int main(int argc, char *argv[]) {
 
     char *option = "\0";
@@ -54,52 +124,55 @@ int main(int argc, char *argv[]) {
     // OK
     if (strcmp(option, "-ft_strdup") == 0 || strcmp(option, "-all") == 0) {
         
-        char *null = NULL;
+        ft_strdup_test();
         
-        // Test 1: Normal string
-        char *original = "Hello world!";
-        char *dup = strdup(original);
-        char *ft_dup = ft_strdup(original);
 
-        printf("strdup test 1: %s\n", dup);
-        printf("ft_strdup test 1: %s\n", ft_dup);
-
-        free(dup);
-        free(ft_dup);
+        // char *null = NULL;
         
-        // Test 2: Empty string
-        original = "";
-        dup = strdup(original);
-        ft_dup = ft_strdup(original);
+        // // Test 1: Normal string
+        // char *original = "Hello world!";
+        // char *dup = strdup(original);
+        // char *ft_dup = ft_strdup(original);
 
-        printf("strdup test 2: %s\n", dup);
-        printf("ft_strdup test 2: %s\n", ft_dup);
+        // printf("strdup test 1: %s\n", dup);
+        // printf("ft_strdup test 1: %s\n", ft_dup);
 
-        free(dup);
-        free(ft_dup);
-
-        // Test 3: Long string
-        original = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-        dup = strdup(original);
-        ft_dup = ft_strdup(original);
-
-        printf("strdup test 3: %s\n", dup);
-        printf("ft_strdup test 3: %s\n", ft_dup);
-
-        free(dup);
-        free(ft_dup);
+        // free(dup);
+        // free(ft_dup);
         
-        // Test 4: NULL input (undefined behavior in the real strdup, so this test is mostly for your custom function)
-        if (0) {
-            dup = strdup(null); // This will likely cause a segmentation fault, so it's disabled
-            ft_dup = ft_strdup(null); // Same here
+        // // Test 2: Empty string
+        // original = "";
+        // dup = strdup(original);
+        // ft_dup = ft_strdup(original);
 
-            printf("strdup test 4: %s\n", dup ? dup : "(null)");
-            printf("ft_strdup test 4: %s\n", ft_dup ? ft_dup : "(null)");
+        // printf("strdup test 2: %s\n", dup);
+        // printf("ft_strdup test 2: %s\n", ft_dup);
 
-            free(dup);
-            free(ft_dup);
-        }
+        // free(dup);
+        // free(ft_dup);
+
+        // // Test 3: Long string
+        // original = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        // dup = strdup(original);
+        // ft_dup = ft_strdup(original);
+
+        // printf("strdup test 3: %s\n", dup);
+        // printf("ft_strdup test 3: %s\n", ft_dup);
+
+        // free(dup);
+        // free(ft_dup);
+        
+        // // Test 4: NULL input (undefined behavior in the real strdup, so this test is mostly for your custom function)
+        // if (0) {
+        //     dup = strdup(null); // This will likely cause a segmentation fault, so it's disabled
+        //     ft_dup = ft_strdup(null); // Same here
+
+        //     printf("strdup test 4: %s\n", dup ? dup : "(null)");
+        //     printf("ft_strdup test 4: %s\n", ft_dup ? ft_dup : "(null)");
+
+        //     free(dup);
+        //     free(ft_dup);
+        // }
     }
 
 
